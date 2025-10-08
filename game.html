@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="game.css">
+  <title>Find the Sunflowers!</title>
+</head>
+<body>
+  <button class="btn" id="backMenu" onclick="window.location.href='index.html'">Back to Menu</button>
+
+<center><br><br><br><br><br><br><br><br>
+      <h1>Find the Sunflowers!</h1>
+      <div class="stats">
+        <p>Player Name: <span id="playerName"></span></p>
+        <p>Score: <span id="score">0</span></p>
+        <p>Lives: <span id="lives">1</span></p>
+        <p>Time: <span id="timer">15</span> seconds</p>
+        <p id="message"></p>
+      </div>
+
+      <div class="board" id="board"></div>
+      <button class="btn" id="restart">Restart</button>
+</center>
+
+    <audio id="bgMusic" src="audios/pvz4-game.mp3" loop></audio>
+
+    <script src="game.js"></script>
+</body>
+</html>
