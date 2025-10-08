@@ -141,7 +141,7 @@ function handleBoxClick(index, box) {
         scoreDisplay.textContent = score;
         message.textContent = "You found a sunflower! +25 points";
     } else if (item === "zombie") {
-        backFace.innerHTML = '<img src="images/conehead-bg.gif" style="width:60%">';
+        backFace.innerHTML = '<img src="images/Conehead-bg.gif" style="width:60%">';
         backFace.style.backgroundColor = "#FF7F7F";
         playSound("audios/toobad.mp3");
         lives--;
@@ -216,3 +216,4 @@ restartButton.addEventListener("click", function () {
 });
 
 startRound();
+
