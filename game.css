@@ -27,20 +27,19 @@ h1 {
 
 .board {
     display: grid;
-    grid-template-columns: repeat(3, 100px);
-    grid-template-rows: repeat(3, 100px);
+    grid-template-columns: repeat(3, minmax(80px, 1fr));
     gap: 10px;
     margin: 20px auto;
+    width: 90%;
+    max-width: 360px;
 }
 
 .box {
-    width: 100px;
-    height: 100px;
+    aspect-ratio: 1 / 1;
     perspective: 1000px;
-    display: inline-block;
-    margin: 10px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
+    border-radius: 10px;
 }
 
 .box:hover {
@@ -73,7 +72,7 @@ h1 {
 }
 
 .box-front {
-    background-color: #5b5a5a;
+    background-color: #e4be90;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -148,3 +147,49 @@ h1 {
 }
 
 
+@media (max-width: 1024px) {
+    .stats {
+        font-size: 14px;
+        top: 10px;
+        right: 10px;
+        padding: 0.6em 1em;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    .btn {
+        font-size: 1em;
+        padding: 10px 22px;
+    }
+}
+
+@media (max-width: 600px) {
+    .board {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        max-width: 260px;
+    }
+
+    .stats {
+        position: static;
+        margin-top: 10px;
+        text-align: center;
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    .btn {
+        font-size: 0.9em;
+        padding: 8px 18px;
+    }
+
+    #backMenu {
+        position: static;
+        margin-bottom: 10px;
+    }
+}
