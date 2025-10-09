@@ -3,6 +3,7 @@ const scoreDisplay = document.getElementById("score");
 const timerDisplay = document.getElementById("timer");
 const message = document.getElementById("message");
 const restartButton = document.getElementById("restart");
+const tryAgainButton = document.getElementById("tryAgain");
 const livesDisplay = document.getElementById("lives");
 const playerNameDisplay = document.getElementById("playerName");
 const leaderboardList = document.getElementById("leaderboard");
@@ -39,7 +40,6 @@ function playSound(src) {
 function saveToLeaderboard(name, score) {
     let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
 
-    // checkcheck kung ang name ng player already exists
     const existing = leaderboard.find(player => player.name === name);
     if (existing) {
         if (score > existing.score) {
@@ -57,7 +57,6 @@ function saveToLeaderboard(name, score) {
 function loadLeaderboard() {
     let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
 
-    // no duplicates names then keep highest score only
     let unique = {};
     leaderboard.forEach(player => {
         if (!unique[player.name] || player.score > unique[player.name]) {
@@ -68,23 +67,22 @@ function loadLeaderboard() {
 
     leaderboard.sort((a, b) => b.score - a.score);
 
-    leaderboardList.innerHTML = "";
-    leaderboard.forEach(player => {
-        const li = document.createElement("li");
-        li.textContent = `${player.name}: ${player.score}`;
-        leaderboardList.appendChild(li);
-    });
+    if (leaderboardList) {
+        leaderboardList.innerHTML = "";
+        leaderboard.forEach(player => {
+            const li = document.createElement("li");
+            li.textContent = `${player.name}: ${player.score}`;
+            leaderboardList.appendChild(li);
+        });
+    }
 
     localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
 }
 
-// 9 boxes: 1 sun, 4 sunflowers, and 4 zombies
 function setSunflowers() {
     const totalBoxes = 9;
     let items = ["sunflower", "sunflower", "sunflower", "sunflower", "zombie", "zombie", "zombie", "zombie", "sun"];
     sunflowerPositions = [];
-
-    // shuffle the sun, sunflowers, and zombies
     items = items.sort(() => Math.random() - 0.5);
 
     items.forEach((item, index) => {
@@ -121,22 +119,17 @@ function handleBoxClick(index, box) {
     if (chosenBoxes.includes(index)) return;
 
     chosenBoxes.push(index);
-
-    // para hindi magka-extra clicks if already chosen 2 boxes
     if (chosenBoxes.length > 2) return;
 
     const backFace = box.querySelector(".box-back");
     box.classList.add("flipped");
 
-    // shuffle
     const item = shuffledItems[index];
 
     if (item === "sunflower") {
         backFace.innerHTML = '<img src="images/sunflower-unscreen.gif" style="width:100%">';
         backFace.style.backgroundColor = "#90EE90";
         playSound("audios/killpop.mp3");
-
-        // +25 points for sunflower
         score += 25;
         scoreDisplay.textContent = score;
         message.textContent = "You found a sunflower! +25 points";
@@ -145,19 +138,17 @@ function handleBoxClick(index, box) {
         backFace.style.backgroundColor = "#FF7F7F";
         playSound("audios/toobad.mp3");
         lives--;
-
-        // -10 points for zombie
         score -= 10;
         if (score < 0) score = 0;
         scoreDisplay.textContent = score;
         livesDisplay.textContent = lives;
-
         message.textContent = "A zombie got you! -10 points, -1 life";
 
         if (lives <= 0) {
             message.textContent = "Game Over!";
             game = false;
             saveToLeaderboard(savedUsername, score);
+            tryAgainButton.style.display = "inline-block"; // try again button
             return;
         }
 
@@ -170,7 +161,6 @@ function handleBoxClick(index, box) {
         message.textContent = "You gained an extra life!";
     }
 
-    // 2 clicks only, then start next round
     if (chosenBoxes.length === 2) {
         game = false; 
         setTimeout(startRound, 1500);
@@ -182,8 +172,6 @@ function startRound() {
     shuffledItems = setSunflowers(); 
     createBoard();
     message.textContent = "";
-
-    // para hindi magreset yung lives
     livesDisplay.textContent = lives; 
     time = 15; 
     timerDisplay.textContent = time;
@@ -215,5 +203,15 @@ restartButton.addEventListener("click", function () {
     startRound();
 });
 
-startRound();
+// lalabas yung try again kapag 0 life na
+tryAgainButton.addEventListener("click", () => {
+    lives = 3;
+    score = 0;
+    scoreDisplay.textContent = score;
+    livesDisplay.textContent = lives;
+    message.textContent = "";
+    tryAgainButton.style.display = "none";
+    startRound();
+});
 
+startRound();
