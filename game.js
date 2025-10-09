@@ -155,7 +155,7 @@ function handleBoxClick(index, box) {
     } else if (item === "sun") {
         backFace.innerHTML = '<img src="images/sun.gif" style="width:80%">';
         backFace.style.backgroundColor = "#FFD700";
-        playSound("audios/plants-vs-zombies-sun-pickup.mp3");
+        playSound("audios/sun.mp3");
         lives++;
         livesDisplay.textContent = lives;
         message.textContent = "You gained an extra life!";
@@ -215,3 +215,4 @@ tryAgainButton.addEventListener("click", () => {
 });
 
 startRound();
+
