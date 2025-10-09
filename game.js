@@ -2,7 +2,6 @@ const board = document.getElementById("board");
 const scoreDisplay = document.getElementById("score");
 const timerDisplay = document.getElementById("timer");
 const message = document.getElementById("message");
-const restartButton = document.getElementById("restart");
 const tryAgainButton = document.getElementById("tryAgain");
 const livesDisplay = document.getElementById("lives");
 const playerNameDisplay = document.getElementById("playerName");
@@ -197,12 +196,6 @@ function startTimer() {
     }, 1000);
 }
 
-restartButton.addEventListener("click", function () {
-    score = 0;
-    scoreDisplay.textContent = score;
-    startRound();
-});
-
 // lalabas yung try again kapag 0 life na
 tryAgainButton.addEventListener("click", () => {
     lives = 3;
@@ -215,4 +208,3 @@ tryAgainButton.addEventListener("click", () => {
 });
 
 startRound();
-
